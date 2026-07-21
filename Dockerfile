@@ -13,7 +13,7 @@ RUN apt-get update \
 COPY requerments.txt .
 RUN pip install --no-cache-dir -r requerments.txt
 
-COPY api.py filter.py perception.py pred.py reg.py regression.py run_modules.py ./
+COPY api.py filter.py perception.py pred.py reg.py regression.py ./
 COPY templates/ ./templates/
 COPY data/ ./data/
 COPY model_reg/ ./model_reg/
