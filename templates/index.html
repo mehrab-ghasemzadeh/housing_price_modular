@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tahoma', 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            max-width: 900px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+
+        label .required {
+            color: #e74c3c;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #fafafa;
+            font-family: inherit;
+            height: 60px;
+        }
+
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        input:hover, select:hover {
+            border-color: #b8b8b8;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-row-4 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 20px;
+        }
+
+        /* Single Pill Button Styles */
+        .pill-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding-top: 8px;
+        }
+
+        .pill-button {
+            padding: 8px 40px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            background: #fafafa;
+            color: #555;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            user-select: none;
+            min-width: 120px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .pill-button:hover {
+            border-color: #b8b8b8;
+            background: #f0f0f0;
+            transform: translateY(-2px);
+        }
+
+        .pill-button.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .pill-button.active:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .pill-button:active {
+            transform: scale(0.95);
+        }
+
+        .pill-status {
+            font-size: 14px;
+            font-weight: bold;
+            color: #555;
+            min-width: 40px;
+        }
+
+        .pill-status.active-text {
+            color: #667eea;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .result-container {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .result-container.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-label {
+            color: #555;
+            font-weight: 500;
+        }
+
+        .result-value {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .result-value.highlight {
+            color: #667eea;
+            font-size: 20px;
+        }
+
+        .result-value.green {
+            color: #27ae60;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            display: none;
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error-message {
+            background: #fee;
+            color: #c0392b;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: none;
+            border-right: 4px solid #c0392b;
+        }
+
+        .error-message.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .neighborhood-info {
+            margin-top: 15px;
+            padding: 15px;
+            background: #e8f0fe;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .neighborhood-info .label {
+            color: #555;
+            font-weight: 500;
+        }
+
+        /* Gauge Chart Styles */
+        .gauge-container {
+            margin-top: 20px;
+            padding: 20px 15px 15px 15px;
+            background: white;
+            border-radius: 10px;
+            border: 1px solid #e0e0e0;
+            display: none;
+        }
+
+        .gauge-container.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .gauge-title {
+            text-align: center;
+            color: #333;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .gauge-track {
+            position: relative;
+            height: 40px;
+            background: #e9ecef;
+            border-radius: 20px;
+            margin: 0 10px;
+            overflow: visible;
+        }
+
+        .gauge-fill {
+            height: 100%;
+            border-radius: 20px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: width 0.8s ease;
+            position: relative;
+        }
+
+        .gauge-marker {
+            position: absolute;
+            top: -15px;
+            width: 4px;
+            height: 70px;
+            background: #e74c3c;
+            border-radius: 2px;
+            transition: left 0.8s ease;
+            z-index: 5;
+        }
+
+        .gauge-marker::before {
+            content: '▼';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #e74c3c;
+            font-size: 16px;
+        }
+
+        .gauge-labels {
+            display: flex;
+            justify-content: space-between;
+            margin: 8px 10px 0 10px;
+            font-size: 11px;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .gauge-labels .min-label {
+            color: #27ae60;
+        }
+
+        .gauge-labels .max-label {
+            color: #e74c3c;
+        }
+
+        .gauge-labels .predicted-label {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .gauge-value {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .gauge-range-info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 5px;
+            font-size: 12px;
+            color: #888;
+            padding: 0 10px;
+        }
+
+        /* Plot Container Styles */
+        .plot-container {
+            margin-top: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            display: none;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+        }
+
+        .plot-container.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .plot-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .plot-title {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        /* Neighbors Table */
+        .neighbors-table-container {
+            margin-top: 20px;
+            overflow-x: auto;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .neighbors-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            direction: ltr;
+        }
+
+        .neighbors-table th {
+            background: #667eea;
+            color: white;
+            padding: 10px 8px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            white-space: nowrap;
+        }
+
+        .neighbors-table td {
+            padding: 8px;
+            text-align: center;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .neighbors-table tr:hover {
+            background: #f0f4ff;
+        }
+
+        .neighbors-table .price-highlight {
+            color: #27ae60;
+            font-weight: bold;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .badge-true {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .badge-false {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .form-row-3 {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .form-row-4 {
+                grid-template-columns: 1fr 1fr 1fr 1fr;
+            }
+
+            h1 {
+                font-size: 22px;
+            }
+
+            .pill-container {
+                flex-wrap: wrap;
+            }
+
+            .pill-button {
+                flex: 1;
+                text-align: center;
+                padding: 12px 20px;
+                min-width: 80px;
+            }
+
+            .neighbors-table {
+                font-size: 11px;
+            }
+
+            .neighbors-table th,
+            .neighbors-table td {
+                padding: 6px 4px;
+            }
+
+            .gauge-track {
+                height: 30px;
+            }
+
+            .gauge-marker {
+                height: 50px;
+                top: -10px;
+            }
+
+            .gauge-marker::before {
+                font-size: 12px;
+                top: -15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .form-row-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏠 {{ title }}</h1>
+        <p class="subtitle">برآورد قیمت ملک با استفاده از روش‌های ترکیبی هوش مصنوعی</p>
+
+        <form id="predictionForm">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="area">مساحت (متر مربع) <span class="required">*</span></label>
+                    <input type="number" id="area" name="area" min="1" step="any" required placeholder="مثال: 135">
+                </div>
+                <div class="form-group">
+                    <label for="num_bedrooms">تعداد اتاق خواب <span class="required">*</span></label>
+                    <input type="number" id="num_bedrooms" name="num_bedrooms" min="0" required placeholder="مثال: 2">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="id_neighbourhood">محله <span class="required">*</span></label>
+                    <select id="id_neighbourhood" name="id_neighbourhood" required>
+                        <option value="">انتخاب محله...</option>
+                        {% for hood in neighbourhoods %}
+                            <option value="{{ hood.id }}">{{ hood.title }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="construction_year">سال ساخت <span class="required">*</span></label>
+                    <input type="number" id="construction_year" name="construction_year" min="1300" max="1405" required placeholder="مثال: 1400">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="floor">طبقه <span class="required">*</span></label>
+                    <input type="number" id="floor" name="floor" required placeholder="مثال: 3">
+                </div>
+                <div class="form-group">
+                    <label for="parking">پارکینگ <span class="required">*</span></label>
+                    <input type="number" id="parking" name="parking" min="0" required placeholder="تعداد پارکینگ">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>آسانسور <span class="required">*</span></label>
+                    <div class="pill-container">
+                        <button type="button" class="pill-button" id="elevatorBtn">
+                            <span id="elevatorText">خیر</span>
+                        </button>
+                    </div>
+                    <input type="hidden" id="elevator" name="elevator" value="0">
+                </div>
+                <div class="form-group">
+                    <label>انباری <span class="required">*</span></label>
+                    <div class="pill-container">
+                        <button type="button" class="pill-button" id="storeHouseBtn">
+                            <span id="storeHouseText">خیر</span>
+                        </button>
+                    </div>
+                    <input type="hidden" id="storeHouse" name="storeHouse" value="0">
+                </div>
+            </div>
+
+            <!-- <details>
+                <summary style="height: 60px;">
+                    امکانات بیشتر
+                </summary>
+                <div class="form-row-4">
+                    <div class="form-group">
+                        <label>بالکن</label>
+                        <div class="pill-container">
+                            <button type="button" class="pill-button" id="elevatorBtn">
+                                <span id="elevatorText">خیر</span>
+                            </button>
+                        </div>
+                        <input type="hidden" id="elevator" name="elevator" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label>استخر</label>
+                        <div class="pill-container">
+                            <button type="button" class="pill-button" id="storeHouseBtn">
+                                <span id="storeHouseText">خیر</span>
+                            </button>
+                        </div>
+                        <input type="hidden" id="storeHouse" name="storeHouse" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label>سالن ورزشی</label>
+                        <div class="pill-container">
+                            <button type="button" class="pill-button" id="elevatorBtn">
+                                <span id="elevatorText">خیر</span>
+                            </button>
+                        </div>
+                        <input type="hidden" id="elevator" name="elevator" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label>اتاق مستر</label>
+                        <div class="pill-container">
+                            <button type="button" class="pill-button" id="storeHouseBtn">
+                                <span id="storeHouseText">خیر</span>
+                            </button>
+                        </div>
+                        <input type="hidden" id="storeHouse" name="storeHouse" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label>سرایدار</label>
+                        <div class="pill-container">
+                            <button type="button" class="pill-button" id="elevatorBtn">
+                                <span id="elevatorText">خیر</span>
+                            </button>
+                        </div>
+                        <input type="hidden" id="elevator" name="elevator" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label>نگهبان</label>
+                        <div class="pill-container">
+                            <button type="button" class="pill-button" id="storeHouseBtn">
+                                <span id="storeHouseText">خیر</span>
+                            </button>
+                        </div>
+                        <input type="hidden" id="storeHouse" name="storeHouse" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label>لوکس</label>
+                        <div class="pill-container">
+                            <button type="button" class="pill-button" id="elevatorBtn">
+                                <span id="elevatorText">خیر</span>
+                            </button>
+                        </div>
+                        <input type="hidden" id="elevator" name="elevator" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label>مدرن</label>
+                        <div class="pill-container">
+                            <button type="button" class="pill-button" id="storeHouseBtn">
+                                <span id="storeHouseText">خیر</span>
+                            </button>
+                        </div>
+                        <input type="hidden" id="storeHouse" name="storeHouse" value="0">
+                    </div>
+                </div>
+            </details> -->
+
+            <button type="submit" class="btn-submit" id="submitBtn">برآورد قیمت</button>
+        </form>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p style="margin-top: 10px; color: #666;">در حال پردازش...</p>
+        </div>
+
+        <div class="error-message" id="errorMessage"></div>
+
+        <div class="result-container" id="resultContainer">
+            <h3 style="color: #333; margin-bottom: 15px;">📊 نتیجه برآورد</h3>
+            
+            <div class="result-item">
+                <span class="result-label">قیمت کل (تومان)</span>
+                <span class="result-value highlight" id="totalPrice">-</span>
+            </div>
+
+            <div class="result-item">
+                <span class="result-label">قیمت نهایی به ازای هر متر (تومان)</span>
+                <span class="result-value highlight" id="finalPrice">-</span>
+            </div>
+            
+            <div class="result-item">
+                <span class="result-label">برآورد بر اساس روش مبتنی بر مدل</span>
+                <span class="result-value" id="regressionPrice">-</span>
+            </div>
+            
+            <div class="result-item">
+                <span class="result-label">برآورد بر اساس روش مبتنی بر نمونه</span>
+                <span class="result-value" id="instancePrice">-</span>
+            </div>
+
+            <!-- Gauge Chart -->
+            <div class="gauge-container" id="gaugeContainer">
+                <div class="gauge-title">📍 موقعیت قیمت پیشنهادی در محدوده املاک مشابه</div>
+                <div class="gauge-track">
+                    <div class="gauge-fill" id="gaugeFill" style="width: 50%;"></div>
+                    <!-- <div class="gauge-marker" id="gaugeMarker" style="left: 50%;"></div> -->
+                </div>
+                <div class="gauge-labels">
+                    <span class="min-label" id="gaugeMinLabel">حداقل: -</span>
+                    <span class="predicted-label" id="gaugePredictedLabel">قیمت پیشنهادی: -</span>
+                    <span class="max-label" id="gaugeMaxLabel">حداکثر: -</span>
+                </div>
+                <div class="gauge-range-info">
+                    <span>قیمت هر متر (میلیارد تومان)</span>
+                </div>
+            </div>
+
+            <!-- Neighbors Table -->
+            <details id="neighborsTableContainer" style="display: none;">
+                <summary style="color: #333; margin-top: 20px; margin-bottom: 10px;">🏘️ املاک مشابه</summary>
+                <div class="neighbors-table-container">
+                    <table class="neighbors-table" id="neighborsTable">
+                        <thead>
+                            <tr>
+                                <th>قیمت هر متر</th>
+                                <th>سن بنا</th>
+                                <th>اتاق</th>
+                                <th>مساحت</th>
+                                <th>طبقه</th>
+                                <th>پارکینگ</th>
+                                <th>آسانسور</th>
+                                <th>انباری</th>
+                            </tr>
+                        </thead>
+                        <tbody id="neighborsTableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </details>
+
+            <!-- <div class="neighborhood-info" id="neighborhoodInfo">
+                <div><span class="label">اطلاعات محله:</span></div>
+                <div id="neighborhoodDetails" style="margin-top: 8px; color: #555;"></div>
+            </div> -->
+
+            <!-- Price Trend Plot -->
+            <div class="plot-container" id="plotContainer">
+                <div class="plot-title">📈 روند قیمت و تعداد فروش در محله</div>
+                <img id="trendPlot" src="" alt="Price Trend Plot">
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Single Pill Button for Elevator
+        const elevatorBtn = document.getElementById('elevatorBtn');
+        const elevatorText = document.getElementById('elevatorText');
+        const elevatorHidden = document.getElementById('elevator');
+        let elevatorActive = false;
+
+        elevatorBtn.addEventListener('click', function() {
+            elevatorActive = !elevatorActive;
+            if (elevatorActive) {
+                this.classList.add('active');
+                elevatorText.textContent = 'بله';
+                elevatorHidden.value = '1';
+            } else {
+                this.classList.remove('active');
+                elevatorText.textContent = 'خیر';
+                elevatorHidden.value = '0';
+            }
+        });
+
+        // Single Pill Button for StoreHouse
+        const storeHouseBtn = document.getElementById('storeHouseBtn');
+        const storeHouseText = document.getElementById('storeHouseText');
+        const storeHouseHidden = document.getElementById('storeHouse');
+        let storeHouseActive = false;
+
+        storeHouseBtn.addEventListener('click', function() {
+            storeHouseActive = !storeHouseActive;
+            if (storeHouseActive) {
+                this.classList.add('active');
+                storeHouseText.textContent = 'بله';
+                storeHouseHidden.value = '1';
+            } else {
+                this.classList.remove('active');
+                storeHouseText.textContent = 'خیر';
+                storeHouseHidden.value = '0';
+            }
+        });
+
+        // Helper function - format price
+        function formatPrice(price) {
+            if (price === undefined || price === null || isNaN(price)) return '-';
+            const priceInToman = price * 1000000000;
+            return Math.round(priceInToman).toLocaleString('fa-IR');
+        }
+
+        function formatPricePerArea(price) {
+            if (price === undefined || price === null || isNaN(price)) return '-';
+            const priceInToman = price * 1000000000;
+            return Math.round(priceInToman).toLocaleString('fa-IR');
+        }
+
+        // Format price for gauge (in billion toman)
+        function formatGaugePrice(price) {
+            if (price === undefined || price === null || isNaN(price)) return '-';
+            return price.toFixed(2);
+        }
+
+        // Show error function
+        function showError(message) {
+            const errorMessage = document.getElementById('errorMessage');
+            errorMessage.textContent = '❌ ' + message;
+            errorMessage.classList.add('show');
+            
+            setTimeout(() => {
+                errorMessage.classList.remove('show');
+            }, 5000);
+        }
+
+        // Update gauge chart
+        function updateGauge(minVal, predictedVal, maxVal) {
+            const gaugeContainer = document.getElementById('gaugeContainer');
+            const gaugeFill = document.getElementById('gaugeFill');
+            // const gaugeMarker = document.getElementById('gaugeMarker');
+            const gaugeMinLabel = document.getElementById('gaugeMinLabel');
+            const gaugeMaxLabel = document.getElementById('gaugeMaxLabel');
+            const gaugePredictedLabel = document.getElementById('gaugePredictedLabel');
+
+            // Check if we have valid values
+            if (minVal === undefined || minVal === null || 
+                predictedVal === undefined || predictedVal === null || 
+                maxVal === undefined || maxVal === null ||
+                minVal === maxVal) {
+                gaugeContainer.classList.remove('show');
+                return;
+            }
+
+            // Calculate position percentage (0-100)
+            const range = maxVal - minVal;
+            let position = ((predictedVal - minVal) / range) * 100;
+            
+            // Clamp position between 2% and 98% for better visibility
+            position = Math.max(2, Math.min(98, position));
+
+            // Update gauge fill (show range up to marker position)
+            gaugeFill.style.width = position + '%';
+            
+            // Update marker position
+            // gaugeMarker.style.left = position + '%';
+
+            // Update labels
+            gaugeMinLabel.textContent = `حداقل: ${formatGaugePrice(minVal)}`;
+            gaugeMaxLabel.textContent = `حداکثر: ${formatGaugePrice(maxVal)}`;
+            gaugePredictedLabel.textContent = `قیمت پیشنهادی: ${formatGaugePrice(predictedVal)}`;
+
+            // Show the gauge
+            gaugeContainer.classList.add('show');
+        }
+
+        // Display neighbors table
+        function displayNeighbors(neighbors) {
+            const container = document.getElementById('neighborsTableContainer');
+            const tbody = document.getElementById('neighborsTableBody');
+            
+            if (!neighbors || neighbors.length === 0) {
+                container.style.display = 'none';
+                return;
+            }
+
+            tbody.innerHTML = '';
+            neighbors.forEach(neighbor => {
+                const row = document.createElement('tr');
+                
+                const formatBool = (val) => {
+                    if (val === true || val === 1 || val === '1') {
+                        return '<span class="badge badge-true">✓</span>';
+                    }
+                    return '<span class="badge badge-false">✗</span>';
+                };
+
+                row.innerHTML = `
+                    <td class="price-highlight">${formatPricePerArea(neighbor.price_per_area)}</td>
+                    <td>${neighbor.building_age || '-'}</td>
+                    <td>${neighbor.num_bedrooms || 0}</td>
+                    <td>${neighbor.area || 0}</td>
+                    <td>${neighbor.floor || 0}</td>
+                    <td>${neighbor.parking || 0}</td>
+                    <td>${formatBool(neighbor.elevator)}</td>
+                    <td>${formatBool(neighbor.storeHouse)}</td>
+                `;
+                tbody.appendChild(row);
+            });
+
+            container.style.display = 'block';
+        }
+
+        // Display results function
+        function displayResults(data) {
+            const resultContainer = document.getElementById('resultContainer');
+            
+            document.getElementById('finalPrice').textContent = formatPrice(data.final_prediction);
+            document.getElementById('regressionPrice').textContent = formatPrice(data.model_base_regression);
+            document.getElementById('instancePrice').textContent = formatPrice(data.instance_base_regression);
+            document.getElementById('totalPrice').textContent = formatPrice(data.total_price);
+            
+            // Update gauge chart with min, predicted, max values
+            updateGauge(data.min_value, data.final_prediction, data.max_value);
+            
+            // Display trend plot if available
+            const plotContainer = document.getElementById('plotContainer');
+            const trendPlotImg = document.getElementById('trendPlot');
+            
+            if (data.trend_plot) {
+                trendPlotImg.src = `data:image/png;base64,${data.trend_plot}`;
+                plotContainer.classList.add('show');
+            } else {
+                plotContainer.classList.remove('show');
+            }
+
+            // // Neighborhood info
+            // const info = data.neighborhood_ifno;
+            // if (info && typeof info === 'object') {
+            //     let detailsHtml = '';
+            //     if (info.area_resemblence_with_neighborhood_mean !== undefined) {
+            //         detailsHtml += `<div>تشابه مساحت با میانگین محله: ${(info.area_resemblence_with_neighborhood_mean * 100).toFixed(1)}%</div>`;
+            //     }
+            //     if (info.num_bedrooms_resemblence_with_neighborhood_mean !== undefined) {
+            //         detailsHtml += `<div>تشابه تعداد اتاق با میانگین محله: ${(info.num_bedrooms_resemblence_with_neighborhood_mean * 100).toFixed(1)}%</div>`;
+            //     }
+            //     if (info.floor_resemblence_with_neighborhood_mean !== undefined) {
+            //         detailsHtml += `<div>تشابه طبقه با میانگین محله: ${(info.floor_resemblence_with_neighborhood_mean * 100).toFixed(1)}%</div>`;
+            //     }
+            //     if (info.percentage_parking_eq_query !== undefined) {
+            //         detailsHtml += `<div>درصد املاک با پارکینگ مشابه: ${(info.percentage_parking_eq_query * 100).toFixed(1)}%</div>`;
+            //     }
+            //     if (info.percentage_elevator_eq_query !== undefined) {
+            //         detailsHtml += `<div>درصد املاک با آسانسور مشابه: ${(info.percentage_elevator_eq_query * 100).toFixed(1)}%</div>`;
+            //     }
+            //     if (info.percentage_storeHouse_eq_query !== undefined) {
+            //         detailsHtml += `<div>درصد املاک با انباری مشابه: ${(info.percentage_storeHouse_eq_query * 100).toFixed(1)}%</div>`;
+            //     }
+            //     document.getElementById('neighborhoodDetails').innerHTML = detailsHtml || 'اطلاعاتی موجود نیست';
+            // } else {
+            //     document.getElementById('neighborhoodDetails').textContent = 'اطلاعاتی موجود نیست';
+            // }
+
+            // Display neighbors table
+            if (data.instance_base_neighbors && data.instance_base_neighbors.length > 0) {
+                displayNeighbors(data.instance_base_neighbors);
+            } else {
+                document.getElementById('neighborsTableContainer').style.display = 'none';
+            }
+
+            resultContainer.classList.add('show');
+        }
+
+        // Main form submission handler
+        document.getElementById('predictionForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const submitBtn = document.getElementById('submitBtn');
+            const loading = document.getElementById('loading');
+            const resultContainer = document.getElementById('resultContainer');
+            const errorMessage = document.getElementById('errorMessage');
+
+            // Reset displays
+            resultContainer.classList.remove('show');
+            errorMessage.classList.remove('show');
+            loading.classList.remove('show');
+            submitBtn.disabled = true;
+            document.getElementById('neighborsTableContainer').style.display = 'none';
+            document.getElementById('plotContainer').classList.remove('show');
+            document.getElementById('gaugeContainer').classList.remove('show');
+
+            // Collect form data
+            const formData = new FormData(this);
+            
+            const elevatorValue = parseInt(document.getElementById('elevator').value);
+            const storeHouseValue = parseInt(document.getElementById('storeHouse').value);
+            
+            const data = {
+                area: parseFloat(formData.get('area')),
+                num_bedrooms: parseInt(formData.get('num_bedrooms')),
+                id_neighbourhood: parseInt(formData.get('id_neighbourhood')),
+                floor: parseInt(formData.get('floor')),
+                parking: parseInt(formData.get('parking')),
+                elevator: elevatorValue,
+                storeHouse: storeHouseValue,
+                construction_year: parseInt(formData.get('construction_year'))
+            };
+
+            // Validate
+            if (isNaN(data.area) || data.area <= 0) {
+                showError('مساحت باید عددی مثبت باشد');
+                submitBtn.disabled = false;
+                return;
+            }
+
+            if (isNaN(data.num_bedrooms) || data.num_bedrooms < 0) {
+                showError('تعداد اتاق خواب باید عددی بزرگتر یا مساوی صفر باشد');
+                submitBtn.disabled = false;
+                return;
+            }
+
+            if (isNaN(data.id_neighbourhood)) {
+                showError('لطفاً یک محله را انتخاب کنید');
+                submitBtn.disabled = false;
+                return;
+            }
+
+            if (isNaN(data.construction_year) || data.construction_year < 1300 || data.construction_year > 1405) {
+                showError('سال ساخت باید بین ۱۳۰۰ تا ۱۴۰۵ باشد');
+                submitBtn.disabled = false;
+                return;
+            }
+
+            // Show loading
+            loading.classList.add('show');
+
+            try {
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(result.detail || 'خطا در ارتباط با سرور');
+                }
+
+                if (result.status === 0) {
+                    const errorMsg = result.content.error || 'خطا در برآورد قیمت';
+                    showError(errorMsg);
+                    
+                    if (result.content.model_base_regression !== undefined) {
+                        document.getElementById('regressionPrice').textContent = formatPrice(result.content.model_base_regression);
+                        document.getElementById('resultContainer').classList.add('show');
+                    }
+                } else {
+                    displayResults(result.content);
+                }
+
+            } catch (error) {
+                showError(error.message || 'خطایی رخ داده است. لطفاً دوباره تلاش کنید.');
+            } finally {
+                loading.classList.remove('show');
+                submitBtn.disabled = false;
+            }
+        });
+
+        // Auto-calculate construction year helper
+        document.getElementById('construction_year').addEventListener('blur', function() {
+            const val = parseInt(this.value);
+            if (!isNaN(val) && val > 1405) {
+                this.value = 1405;
+            }
+            if (!isNaN(val) && val < 1300) {
+                this.value = 1300;
+            }
+        });
+    </script>
+</body>
+</html>
