@@ -75,12 +75,46 @@ def filter_neighbors(df, query):
     df_temp = df_temp[df_temp['num_bedrooms'] < temp_range['max']]
     if len(df_temp):
         df_ = df_temp
+    # ! 'balcony'
+    df_temp = df_[df_['balcony'] == query['balcony']]
+    if len(df_temp):
+        df_ = df_temp
+    # ! 'is_luxury'
+    df_temp = df_[df_['is_luxury'] == query['is_luxury']]
+    if len(df_temp):
+        df_ = df_temp
+    # ! 'is_modern'
+    df_temp = df_[df_['is_modern'] == query['is_modern']]
+    if len(df_temp):
+        df_ = df_temp
+    # ! 'janitor'
+    df_temp = df_[df_['janitor'] == query['janitor']]
+    if len(df_temp):
+        df_ = df_temp
+    # ! 'master_room'
+    df_temp = df_[df_['master_room'] == query['master_room']]
+    if len(df_temp):
+        df_ = df_temp
+    # ! 'pool'
+    df_temp = df_[df_['pool'] == query['pool']]
+    if len(df_temp):
+        df_ = df_temp
+    # ! 'security'
+    df_temp = df_[df_['security'] == query['security']]
+    if len(df_temp):
+        df_ = df_temp
+    # ! 'gym'
+    df_temp = df_[df_['gym'] == query['gym']]
+    if len(df_temp):
+        df_ = df_temp
+    
     return {
         'status':1,
         'content':df_
     }
 
 def calculate_cosine_similarity_scores(query, neighbors):
+    neighbors = neighbors.copy()
     WANTED_COLUMNS = ['building_age', 'num_bedrooms', 'area', 'id_neighbourhood', 'floor', 'parking', 'elevator', 'storeHouse', 'date_publish']
     if neighbors.empty:
         return pd.Series(dtype=float)
@@ -187,6 +221,40 @@ def calculate_effecctive_price(df, query):
             price *= 1.005
         elif query['storeHouse'] < row['storeHouse']:
             price *= 0.995
+        # ! optional features
+        if query['balcony'] > row['balcony']:
+            price *= 1.001
+        elif row['balcony'] > query['balcony']:
+            price *= 0.999
+        if query['is_luxury'] > row['is_luxury']:
+            price *= 1.005
+        elif row['is_luxury'] > query['is_luxury']:
+            price *= 0.995
+        if query['is_modern'] > row['is_modern']:
+            price *= 1.002
+        elif row['is_modern'] > query['is_modern']:
+            price *= 0.998
+        if query['janitor'] > row['janitor']:
+            price *= 1.003
+        elif row['janitor'] > query['janitor']:
+            price *= 0.997
+        if query['master_room'] > row['master_room']:
+            price *= 1.001
+        elif row['master_room'] > query['master_room']:
+            price *= 0.999
+        if query['pool'] > row['pool']:
+            price *= 1.005
+        elif row['pool'] > query['pool']:
+            price *= 0.995
+        if query['security'] > row['security']:
+            price *= 1.003
+        elif row['security'] > query['security']:
+            price *= 0.997
+        if query['gym'] > row['gym']:
+            price *= 1.005
+        elif row['gym'] > query['gym']:
+            price *= 0.995
+
         effective_prices = np.append(effective_prices, price)
     return effective_prices
 

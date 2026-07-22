@@ -23,6 +23,7 @@ SCALER_Y_DIR = "scaler_y.pkl"
 
 DATA_2Y = pd.read_csv(os.path.join(BASE_DATA_DIR, OLDER_DATA), index_col=0)
 DATA = pd.read_csv(os.path.join(BASE_DATA_DIR, DATA_FILE), index_col=0)
+DATA = DATA[DATA['price_per_area'] > DATA['price_per_area'].quantile(0.005)]
 NEIGHBORHOODS = pd.read_csv(os.path.join(BASE_DATA_DIR, NEIGHBORHOODS_LIST), index_col=0)
 
 templates = Jinja2Templates(directory="templates")
@@ -69,6 +70,15 @@ class Listing(BaseModel):
     elevator: int = Field(..., ge=0, le=1)
     storeHouse: int = Field(..., ge=0, le=1)
     construction_year: int = Field(..., ge=0)
+
+    balcony: int = Field(0, ge=0, le=1)
+    pool: int = Field(0, ge=0, le=1)
+    gym: int = Field(0, ge=0, le=1)
+    master_room: int = Field(0, ge=0, le=1)
+    janitor: int = Field(0, ge=0, le=1)
+    security: int = Field(0, ge=0, le=1)
+    is_luxury: int = Field(0, ge=0, le=1)
+    is_modern: int = Field(0, ge=0, le=1)
 
 class PredictionResult(BaseModel):
     status: int

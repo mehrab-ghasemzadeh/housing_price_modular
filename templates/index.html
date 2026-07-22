@@ -189,6 +189,7 @@
             background: #f8f9fa;
             border-radius: 10px;
             display: none;
+            scroll-margin-top: 20px;
         }
 
         .result-container.show {
@@ -480,6 +481,32 @@
             color: #721c24;
         }
 
+        details {
+            margin-bottom: 20px;
+        }
+
+        details summary {
+            cursor: pointer;
+            padding: 12px 15px;
+            background: #f0f4ff;
+            border-radius: 10px;
+            font-weight: bold;
+            color: #667eea;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            height: 60px;
+        }
+
+        details summary:hover {
+            background: #e0e8ff;
+        }
+
+        details[open] summary {
+            background: #667eea;
+            color: white;
+        }
+
         @media (max-width: 768px) {
             .container {
                 padding: 20px;
@@ -490,12 +517,8 @@
                 gap: 0;
             }
 
-            .form-row-3 {
-                grid-template-columns: 1fr 1fr;
-            }
-
             .form-row-4 {
-                grid-template-columns: 1fr 1fr 1fr 1fr;
+                grid-template-columns: 1fr 1fr;
             }
 
             h1 {
@@ -538,8 +561,8 @@
         }
 
         @media (max-width: 480px) {
-            .form-row-3 {
-                grid-template-columns: 1fr;
+            .form-row-4 {
+                grid-template-columns: 1fr 1fr;
             }
         }
     </style>
@@ -609,85 +632,83 @@
                 </div>
             </div>
 
-            <!-- <details>
-                <summary style="height: 60px;">
-                    امکانات بیشتر
-                </summary>
+            <details>
+                <summary>✨ امکانات بیشتر</summary>
                 <div class="form-row-4">
                     <div class="form-group">
                         <label>بالکن</label>
                         <div class="pill-container">
-                            <button type="button" class="pill-button" id="elevatorBtn">
-                                <span id="elevatorText">خیر</span>
+                            <button type="button" class="pill-button feature-btn" id="balconyBtn">
+                                <span id="balconyText">خیر</span>
                             </button>
                         </div>
-                        <input type="hidden" id="elevator" name="elevator" value="0">
+                        <input type="hidden" id="balcony" name="balcony" value="0">
                     </div>
                     <div class="form-group">
                         <label>استخر</label>
                         <div class="pill-container">
-                            <button type="button" class="pill-button" id="storeHouseBtn">
-                                <span id="storeHouseText">خیر</span>
+                            <button type="button" class="pill-button feature-btn" id="poolBtn">
+                                <span id="poolText">خیر</span>
                             </button>
                         </div>
-                        <input type="hidden" id="storeHouse" name="storeHouse" value="0">
+                        <input type="hidden" id="pool" name="pool" value="0">
                     </div>
                     <div class="form-group">
                         <label>سالن ورزشی</label>
                         <div class="pill-container">
-                            <button type="button" class="pill-button" id="elevatorBtn">
-                                <span id="elevatorText">خیر</span>
+                            <button type="button" class="pill-button feature-btn" id="gymBtn">
+                                <span id="gymText">خیر</span>
                             </button>
                         </div>
-                        <input type="hidden" id="elevator" name="elevator" value="0">
+                        <input type="hidden" id="gym" name="gym" value="0">
                     </div>
                     <div class="form-group">
                         <label>اتاق مستر</label>
                         <div class="pill-container">
-                            <button type="button" class="pill-button" id="storeHouseBtn">
-                                <span id="storeHouseText">خیر</span>
+                            <button type="button" class="pill-button feature-btn" id="masterBtn">
+                                <span id="masterText">خیر</span>
                             </button>
                         </div>
-                        <input type="hidden" id="storeHouse" name="storeHouse" value="0">
+                        <input type="hidden" id="master_room" name="master_room" value="0">
                     </div>
                     <div class="form-group">
                         <label>سرایدار</label>
                         <div class="pill-container">
-                            <button type="button" class="pill-button" id="elevatorBtn">
-                                <span id="elevatorText">خیر</span>
+                            <button type="button" class="pill-button feature-btn" id="janitorBtn">
+                                <span id="janitorText">خیر</span>
                             </button>
                         </div>
-                        <input type="hidden" id="elevator" name="elevator" value="0">
+                        <input type="hidden" id="janitor" name="janitor" value="0">
                     </div>
                     <div class="form-group">
                         <label>نگهبان</label>
                         <div class="pill-container">
-                            <button type="button" class="pill-button" id="storeHouseBtn">
-                                <span id="storeHouseText">خیر</span>
+                            <button type="button" class="pill-button feature-btn" id="securityBtn">
+                                <span id="securityText">خیر</span>
                             </button>
                         </div>
-                        <input type="hidden" id="storeHouse" name="storeHouse" value="0">
+                        <input type="hidden" id="security" name="security" value="0">
                     </div>
                     <div class="form-group">
                         <label>لوکس</label>
                         <div class="pill-container">
-                            <button type="button" class="pill-button" id="elevatorBtn">
-                                <span id="elevatorText">خیر</span>
+                            <button type="button" class="pill-button feature-btn" id="luxuryBtn">
+                                <span id="luxuryText">خیر</span>
                             </button>
                         </div>
-                        <input type="hidden" id="elevator" name="elevator" value="0">
+                        <input type="hidden" id="is_luxury" name="is_luxury" value="0">
                     </div>
                     <div class="form-group">
                         <label>مدرن</label>
                         <div class="pill-container">
-                            <button type="button" class="pill-button" id="storeHouseBtn">
-                                <span id="storeHouseText">خیر</span>
+                            <button type="button" class="pill-button feature-btn" id="modernBtn">
+                                <span id="modernText">خیر</span>
                             </button>
                         </div>
-                        <input type="hidden" id="storeHouse" name="storeHouse" value="0">
+                        <input type="hidden" id="is_modern" name="is_modern" value="0">
                     </div>
                 </div>
-            </details> -->
+            </details>
 
             <button type="submit" class="btn-submit" id="submitBtn">برآورد قیمت</button>
         </form>
@@ -727,7 +748,6 @@
                 <div class="gauge-title">📍 موقعیت قیمت پیشنهادی در محدوده املاک مشابه</div>
                 <div class="gauge-track">
                     <div class="gauge-fill" id="gaugeFill" style="width: 50%;"></div>
-                    <!-- <div class="gauge-marker" id="gaugeMarker" style="left: 50%;"></div> -->
                 </div>
                 <div class="gauge-labels">
                     <span class="min-label" id="gaugeMinLabel">حداقل: -</span>
@@ -740,8 +760,8 @@
             </div>
 
             <!-- Neighbors Table -->
-            <details id="neighborsTableContainer" style="display: none;">
-                <summary style="color: #333; margin-top: 20px; margin-bottom: 10px;">🏘️ املاک مشابه</summary>
+            <details open id="neighborsTableContainer" style="display: none;">
+                <summary style="color: #333; margin-top: 20px; margin-bottom: 10px; height: 62px;">🏘️ املاک مشابه</summary>
                 <div class="neighbors-table-container">
                     <table class="neighbors-table" id="neighborsTable">
                         <thead>
@@ -762,11 +782,6 @@
                 </div>
             </details>
 
-            <!-- <div class="neighborhood-info" id="neighborhoodInfo">
-                <div><span class="label">اطلاعات محله:</span></div>
-                <div id="neighborhoodDetails" style="margin-top: 8px; color: #555;"></div>
-            </div> -->
-
             <!-- Price Trend Plot -->
             <div class="plot-container" id="plotContainer">
                 <div class="plot-title">📈 روند قیمت و تعداد فروش در محله</div>
@@ -777,45 +792,79 @@
     </div>
 
     <script>
-        // Single Pill Button for Elevator
-        const elevatorBtn = document.getElementById('elevatorBtn');
-        const elevatorText = document.getElementById('elevatorText');
-        const elevatorHidden = document.getElementById('elevator');
-        let elevatorActive = false;
+        // ============================================
+        // TOGGLE BUTTON HELPER FUNCTION
+        // ============================================
+        function createToggleButton(btnId, textId, hiddenId, defaultState = false) {
+            const btn = document.getElementById(btnId);
+            const text = document.getElementById(textId);
+            const hidden = document.getElementById(hiddenId);
+            let active = defaultState;
 
-        elevatorBtn.addEventListener('click', function() {
-            elevatorActive = !elevatorActive;
-            if (elevatorActive) {
-                this.classList.add('active');
-                elevatorText.textContent = 'بله';
-                elevatorHidden.value = '1';
+            // Set initial state
+            if (active) {
+                btn.classList.add('active');
+                text.textContent = 'بله';
+                hidden.value = '1';
             } else {
-                this.classList.remove('active');
-                elevatorText.textContent = 'خیر';
-                elevatorHidden.value = '0';
+                btn.classList.remove('active');
+                text.textContent = 'خیر';
+                hidden.value = '0';
             }
-        });
 
-        // Single Pill Button for StoreHouse
-        const storeHouseBtn = document.getElementById('storeHouseBtn');
-        const storeHouseText = document.getElementById('storeHouseText');
-        const storeHouseHidden = document.getElementById('storeHouse');
-        let storeHouseActive = false;
+            // Click handler
+            btn.addEventListener('click', function() {
+                active = !active;
+                if (active) {
+                    this.classList.add('active');
+                    text.textContent = 'بله';
+                    hidden.value = '1';
+                } else {
+                    this.classList.remove('active');
+                    text.textContent = 'خیر';
+                    hidden.value = '0';
+                }
+            });
 
-        storeHouseBtn.addEventListener('click', function() {
-            storeHouseActive = !storeHouseActive;
-            if (storeHouseActive) {
-                this.classList.add('active');
-                storeHouseText.textContent = 'بله';
-                storeHouseHidden.value = '1';
-            } else {
-                this.classList.remove('active');
-                storeHouseText.textContent = 'خیر';
-                storeHouseHidden.value = '0';
-            }
-        });
+            return {
+                getValue: () => active,
+                setValue: (val) => {
+                    active = !!val;
+                    if (active) {
+                        btn.classList.add('active');
+                        text.textContent = 'بله';
+                        hidden.value = '1';
+                    } else {
+                        btn.classList.remove('active');
+                        text.textContent = 'خیر';
+                        hidden.value = '0';
+                    }
+                },
+                getButton: () => btn,
+                getHidden: () => hidden
+            };
+        }
 
-        // Helper function - format price
+        // ============================================
+        // INITIALIZE ALL TOGGLE BUTTONS
+        // ============================================
+        // Required features
+        const elevatorToggle = createToggleButton('elevatorBtn', 'elevatorText', 'elevator', false);
+        const storeHouseToggle = createToggleButton('storeHouseBtn', 'storeHouseText', 'storeHouse', false);
+
+        // Optional features with correct field names
+        const balconyToggle = createToggleButton('balconyBtn', 'balconyText', 'balcony', false);
+        const poolToggle = createToggleButton('poolBtn', 'poolText', 'pool', false);
+        const gymToggle = createToggleButton('gymBtn', 'gymText', 'gym', false);
+        const masterToggle = createToggleButton('masterBtn', 'masterText', 'master_room', false);
+        const janitorToggle = createToggleButton('janitorBtn', 'janitorText', 'janitor', false);
+        const securityToggle = createToggleButton('securityBtn', 'securityText', 'security', false);
+        const luxuryToggle = createToggleButton('luxuryBtn', 'luxuryText', 'is_luxury', false);
+        const modernToggle = createToggleButton('modernBtn', 'modernText', 'is_modern', false);
+
+        // ============================================
+        // HELPER FUNCTION - Format Price
+        // ============================================
         function formatPrice(price) {
             if (price === undefined || price === null || isNaN(price)) return '-';
             const priceInToman = price * 1000000000;
@@ -828,33 +877,58 @@
             return Math.round(priceInToman).toLocaleString('fa-IR');
         }
 
-        // Format price for gauge (in billion toman)
         function formatGaugePrice(price) {
             if (price === undefined || price === null || isNaN(price)) return '-';
             return price.toFixed(2);
         }
 
-        // Show error function
+        // ============================================
+        // SCROLL TO RESULT FUNCTION
+        // ============================================
+        function scrollToResult() {
+            const resultContainer = document.getElementById('resultContainer');
+            if (resultContainer) {
+                // Small delay to ensure the DOM has updated
+                setTimeout(() => {
+                    resultContainer.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start',
+                        inline: 'nearest'
+                    });
+                }, 300);
+            }
+        }
+
+        // ============================================
+        // ERROR HANDLING
+        // ============================================
         function showError(message) {
             const errorMessage = document.getElementById('errorMessage');
             errorMessage.textContent = '❌ ' + message;
             errorMessage.classList.add('show');
+            
+            // Scroll to error message
+            errorMessage.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center',
+                inline: 'nearest'
+            });
             
             setTimeout(() => {
                 errorMessage.classList.remove('show');
             }, 5000);
         }
 
-        // Update gauge chart
+        // ============================================
+        // GAUGE CHART
+        // ============================================
         function updateGauge(minVal, predictedVal, maxVal) {
             const gaugeContainer = document.getElementById('gaugeContainer');
             const gaugeFill = document.getElementById('gaugeFill');
-            // const gaugeMarker = document.getElementById('gaugeMarker');
             const gaugeMinLabel = document.getElementById('gaugeMinLabel');
             const gaugeMaxLabel = document.getElementById('gaugeMaxLabel');
             const gaugePredictedLabel = document.getElementById('gaugePredictedLabel');
 
-            // Check if we have valid values
             if (minVal === undefined || minVal === null || 
                 predictedVal === undefined || predictedVal === null || 
                 maxVal === undefined || maxVal === null ||
@@ -863,29 +937,21 @@
                 return;
             }
 
-            // Calculate position percentage (0-100)
             const range = maxVal - minVal;
             let position = ((predictedVal - minVal) / range) * 100;
-            
-            // Clamp position between 2% and 98% for better visibility
             position = Math.max(2, Math.min(98, position));
 
-            // Update gauge fill (show range up to marker position)
             gaugeFill.style.width = position + '%';
-            
-            // Update marker position
-            // gaugeMarker.style.left = position + '%';
-
-            // Update labels
             gaugeMinLabel.textContent = `حداقل: ${formatGaugePrice(minVal)}`;
             gaugeMaxLabel.textContent = `حداکثر: ${formatGaugePrice(maxVal)}`;
             gaugePredictedLabel.textContent = `قیمت پیشنهادی: ${formatGaugePrice(predictedVal)}`;
 
-            // Show the gauge
             gaugeContainer.classList.add('show');
         }
 
-        // Display neighbors table
+        // ============================================
+        // NEIGHBORS TABLE
+        // ============================================
         function displayNeighbors(neighbors) {
             const container = document.getElementById('neighborsTableContainer');
             const tbody = document.getElementById('neighborsTableBody');
@@ -922,7 +988,9 @@
             container.style.display = 'block';
         }
 
-        // Display results function
+        // ============================================
+        // DISPLAY RESULTS
+        // ============================================
         function displayResults(data) {
             const resultContainer = document.getElementById('resultContainer');
             
@@ -931,10 +999,8 @@
             document.getElementById('instancePrice').textContent = formatPrice(data.instance_base_regression);
             document.getElementById('totalPrice').textContent = formatPrice(data.total_price);
             
-            // Update gauge chart with min, predicted, max values
             updateGauge(data.min_value, data.final_prediction, data.max_value);
             
-            // Display trend plot if available
             const plotContainer = document.getElementById('plotContainer');
             const trendPlotImg = document.getElementById('trendPlot');
             
@@ -945,34 +1011,6 @@
                 plotContainer.classList.remove('show');
             }
 
-            // // Neighborhood info
-            // const info = data.neighborhood_ifno;
-            // if (info && typeof info === 'object') {
-            //     let detailsHtml = '';
-            //     if (info.area_resemblence_with_neighborhood_mean !== undefined) {
-            //         detailsHtml += `<div>تشابه مساحت با میانگین محله: ${(info.area_resemblence_with_neighborhood_mean * 100).toFixed(1)}%</div>`;
-            //     }
-            //     if (info.num_bedrooms_resemblence_with_neighborhood_mean !== undefined) {
-            //         detailsHtml += `<div>تشابه تعداد اتاق با میانگین محله: ${(info.num_bedrooms_resemblence_with_neighborhood_mean * 100).toFixed(1)}%</div>`;
-            //     }
-            //     if (info.floor_resemblence_with_neighborhood_mean !== undefined) {
-            //         detailsHtml += `<div>تشابه طبقه با میانگین محله: ${(info.floor_resemblence_with_neighborhood_mean * 100).toFixed(1)}%</div>`;
-            //     }
-            //     if (info.percentage_parking_eq_query !== undefined) {
-            //         detailsHtml += `<div>درصد املاک با پارکینگ مشابه: ${(info.percentage_parking_eq_query * 100).toFixed(1)}%</div>`;
-            //     }
-            //     if (info.percentage_elevator_eq_query !== undefined) {
-            //         detailsHtml += `<div>درصد املاک با آسانسور مشابه: ${(info.percentage_elevator_eq_query * 100).toFixed(1)}%</div>`;
-            //     }
-            //     if (info.percentage_storeHouse_eq_query !== undefined) {
-            //         detailsHtml += `<div>درصد املاک با انباری مشابه: ${(info.percentage_storeHouse_eq_query * 100).toFixed(1)}%</div>`;
-            //     }
-            //     document.getElementById('neighborhoodDetails').innerHTML = detailsHtml || 'اطلاعاتی موجود نیست';
-            // } else {
-            //     document.getElementById('neighborhoodDetails').textContent = 'اطلاعاتی موجود نیست';
-            // }
-
-            // Display neighbors table
             if (data.instance_base_neighbors && data.instance_base_neighbors.length > 0) {
                 displayNeighbors(data.instance_base_neighbors);
             } else {
@@ -980,9 +1018,14 @@
             }
 
             resultContainer.classList.add('show');
+            
+            // Scroll to results after a small delay to ensure everything is rendered
+            scrollToResult();
         }
 
-        // Main form submission handler
+        // ============================================
+        // FORM SUBMISSION HANDLER
+        // ============================================
         document.getElementById('predictionForm').addEventListener('submit', async function(e) {
             e.preventDefault();
 
@@ -1003,10 +1046,22 @@
             // Collect form data
             const formData = new FormData(this);
             
+            // Get required field values
             const elevatorValue = parseInt(document.getElementById('elevator').value);
             const storeHouseValue = parseInt(document.getElementById('storeHouse').value);
             
+            // Get optional feature values with correct field names
+            const balconyValue = parseInt(document.getElementById('balcony').value);
+            const poolValue = parseInt(document.getElementById('pool').value);
+            const gymValue = parseInt(document.getElementById('gym').value);
+            const masterValue = parseInt(document.getElementById('master_room').value);
+            const janitorValue = parseInt(document.getElementById('janitor').value);
+            const securityValue = parseInt(document.getElementById('security').value);
+            const luxuryValue = parseInt(document.getElementById('is_luxury').value);
+            const modernValue = parseInt(document.getElementById('is_modern').value);
+            
             const data = {
+                // Required fields
                 area: parseFloat(formData.get('area')),
                 num_bedrooms: parseInt(formData.get('num_bedrooms')),
                 id_neighbourhood: parseInt(formData.get('id_neighbourhood')),
@@ -1014,10 +1069,19 @@
                 parking: parseInt(formData.get('parking')),
                 elevator: elevatorValue,
                 storeHouse: storeHouseValue,
-                construction_year: parseInt(formData.get('construction_year'))
+                construction_year: parseInt(formData.get('construction_year')),
+                // Optional features with exact field names
+                balcony: balconyValue,
+                pool: poolValue,
+                gym: gymValue,
+                master_room: masterValue,
+                janitor: janitorValue,
+                security: securityValue,
+                is_luxury: luxuryValue,
+                is_modern: modernValue
             };
 
-            // Validate
+            // Validate required fields
             if (isNaN(data.area) || data.area <= 0) {
                 showError('مساحت باید عددی مثبت باشد');
                 submitBtn.disabled = false;
@@ -1030,7 +1094,7 @@
                 return;
             }
 
-            if (isNaN(data.id_neighbourhood)) {
+            if (isNaN(data.id_neighbourhood) || data.id_neighbourhood <= 0) {
                 showError('لطفاً یک محله را انتخاب کنید');
                 submitBtn.disabled = false;
                 return;
@@ -1042,8 +1106,27 @@
                 return;
             }
 
+            if (isNaN(data.floor)) {
+                showError('لطفاً شماره طبقه را وارد کنید');
+                submitBtn.disabled = false;
+                return;
+            }
+
+            if (isNaN(data.parking) || data.parking < 0) {
+                showError('تعداد پارکینگ باید عددی بزرگتر یا مساوی صفر باشد');
+                submitBtn.disabled = false;
+                return;
+            }
+
             // Show loading
             loading.classList.add('show');
+            
+            // Scroll to loading indicator
+            loading.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center',
+                inline: 'nearest'
+            });
 
             try {
                 const response = await fetch('/predict', {
@@ -1067,6 +1150,8 @@
                     if (result.content.model_base_regression !== undefined) {
                         document.getElementById('regressionPrice').textContent = formatPrice(result.content.model_base_regression);
                         document.getElementById('resultContainer').classList.add('show');
+                        // Scroll to partial results
+                        scrollToResult();
                     }
                 } else {
                     displayResults(result.content);
@@ -1080,7 +1165,9 @@
             }
         });
 
-        // Auto-calculate construction year helper
+        // ============================================
+        // AUTO-CALCULATE CONSTRUCTION YEAR HELPER
+        // ============================================
         document.getElementById('construction_year').addEventListener('blur', function() {
             const val = parseInt(this.value);
             if (!isNaN(val) && val > 1405) {
@@ -1090,6 +1177,33 @@
                 this.value = 1300;
             }
         });
+
+        // ============================================
+        // RESET BUTTON STATES (optional - can be triggered)
+        // ============================================
+        window.resetAllToggles = function() {
+            elevatorToggle.setValue(false);
+            storeHouseToggle.setValue(false);
+            balconyToggle.setValue(false);
+            poolToggle.setValue(false);
+            gymToggle.setValue(false);
+            masterToggle.setValue(false);
+            janitorToggle.setValue(false);
+            securityToggle.setValue(false);
+            luxuryToggle.setValue(false);
+            modernToggle.setValue(false);
+        };
+
+        console.log('✅ All toggle buttons initialized!');
+        console.log('📋 Optional features with correct field names:');
+        console.log('   - balcony');
+        console.log('   - pool');
+        console.log('   - gym');
+        console.log('   - master_room');
+        console.log('   - janitor');
+        console.log('   - security');
+        console.log('   - is_luxury');
+        console.log('   - is_modern');
     </script>
 </body>
 </html>

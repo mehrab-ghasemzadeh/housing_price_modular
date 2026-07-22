@@ -10,9 +10,12 @@ import os
 # Create model directory if it doesn't exist
 os.makedirs('./model_reg', exist_ok=True)
 
+cccc = ['price_per_area','building_age','num_bedrooms','area','id_neighbourhood','floor','parking','elevator','storeHouse','balcony','is_luxury','is_modern','janitor','master_room','pool','security','gym']
+
+
 # Read the data from CSV file
 df = pd.read_csv('data/data_final.csv')
-df = df[['price_per_area','building_age','num_bedrooms','area','id_neighbourhood','floor','parking','elevator','storeHouse']]
+df = df[cccc]
 df = df[df['price_per_area'] < df['price_per_area'].quantile(0.99)]
 df = df[df['price_per_area'] > df['price_per_area'].quantile(0.01)]
 
@@ -22,7 +25,7 @@ print("\nFirst few rows:")
 print(df.head())
 
 # Separate features (X) and target (y)
-cols = ['building_age','num_bedrooms','area','id_neighbourhood','floor','parking','elevator','storeHouse']
+cols = ['building_age','num_bedrooms','area','id_neighbourhood','floor','parking','elevator','storeHouse','balcony','is_luxury','is_modern','janitor','master_room','pool','security','gym']
 X = df[cols]
 y = df['price_per_area']
 

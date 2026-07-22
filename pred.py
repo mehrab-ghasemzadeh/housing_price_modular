@@ -58,14 +58,15 @@ def generate_price_trend_plot(df, nid):
     return image_base64
 
 def predict_new(query={}, data_2y=df, data=df, neighborhoods=df):
-    WANTED_COLUMNS = ['date_publish', 'price_per_area', 'building_age', 'num_bedrooms', 'area', 'id_neighbourhood', 'floor','parking', 'elevator', 'storeHouse']
+    print(query)
+    WANTED_COLUMNS = ['date_publish','price_per_area','building_age','num_bedrooms','area','id_neighbourhood','floor','parking','elevator','storeHouse','balcony','is_luxury','is_modern','janitor','master_room','pool','security','gym']
     data = data[WANTED_COLUMNS]
     result = {}
 
     result_reg = regressor_predict(query)
     result['model_base_regression'] = result_reg
 
-    query_neighbors = filter_neighbors(data, query)
+    query_neighbors = filter_neighbors(data[WANTED_COLUMNS], query)
     if query_neighbors['status']:
         score = calculate_similarity_scores(query, query_neighbors['content'])
         query_neighbors_with_score = pd.concat([query_neighbors['content'], score], axis=1)
@@ -136,22 +137,23 @@ def predict_new(query={}, data_2y=df, data=df, neighborhoods=df):
             }
         }
 
-if __name__ == "__main__":
-    data_2y = pd.read_csv('data/data_final_2y.csv')
-    data = pd.read_csv('data/data_final.csv', index_col=0)
-    neighborhoods = pd.read_csv('data/neighborhood_ids.csv')
+# if __name__ == "__main__":
+#     data_2y = pd.read_csv('data/data_final_2y.csv')
+#     data = pd.read_csv('data/data_final.csv', index_col=0)
+#     data = data[data['price_per_area'] > data['price_per_area'].quantile(0.01)]
+#     neighborhoods = pd.read_csv('data/neighborhood_ids.csv')
 
-    query = {
-        'area': 135,
-        'id_neighbourhood': 200,
-        'building_age': 18,
-        'floor': 1,
-        'num_bedrooms': 1,
-        'elevator': 1,
-        'parking': 1,
-        'storeHouse': 1,
-    }
+#     query = {
+#         'area': 135,
+#         'id_neighbourhood': 200,
+#         'building_age': 18,
+#         'floor': 1,
+#         'num_bedrooms': 1,
+#         'elevator': 1,
+#         'parking': 1,
+#         'storeHouse': 1,
+#     }
 
-    r = predict_new(query=query, data=data, data_2y=data_2y, neighborhoods=neighborhoods)
-    # for k in r:
-    #     print(k, r[k], sep='\n', end='\n\n')
+#     r = predict_new(query=query, data=data, data_2y=data_2y, neighborhoods=neighborhoods)
+#     # for k in r:
+#     #     print(k, r[k], sep='\n', end='\n\n')
