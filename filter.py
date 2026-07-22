@@ -171,7 +171,6 @@ def weighted_sum(df):
 
 def calculate_effecctive_price(df, query):
     df = df.copy()
-    WANTED_COLUMNS = ['building_age', 'num_bedrooms', 'floor', 'parking', 'elevator', 'storeHouse']
     effective_prices = np.array([])
     def get_age_relavance(a, b=query['building_age']):
         age_scores = {1:0, 3:0.01, 7:0.025, 15:0.04, 200000:0.08}
@@ -222,38 +221,40 @@ def calculate_effecctive_price(df, query):
         elif query['storeHouse'] < row['storeHouse']:
             price *= 0.995
         # ! optional features
+        print(price, end='\t')
         if query['balcony'] > row['balcony']:
-            price *= 1.001
+            price *= 1.01
         elif row['balcony'] > query['balcony']:
-            price *= 0.999
+            price *= 0.99
         if query['is_luxury'] > row['is_luxury']:
-            price *= 1.005
+            price *= 1.02
         elif row['is_luxury'] > query['is_luxury']:
-            price *= 0.995
+            price *= 0.98
         if query['is_modern'] > row['is_modern']:
-            price *= 1.002
+            price *= 1.015
         elif row['is_modern'] > query['is_modern']:
-            price *= 0.998
+            price *= 0.985
         if query['janitor'] > row['janitor']:
-            price *= 1.003
+            price *= 1.02
         elif row['janitor'] > query['janitor']:
-            price *= 0.997
+            price *= 0.98
         if query['master_room'] > row['master_room']:
-            price *= 1.001
+            price *= 1.005
         elif row['master_room'] > query['master_room']:
-            price *= 0.999
+            price *= 0.995
         if query['pool'] > row['pool']:
-            price *= 1.005
+            price *= 1.03
         elif row['pool'] > query['pool']:
-            price *= 0.995
+            price *= 0.97
         if query['security'] > row['security']:
-            price *= 1.003
+            price *= 1.03
         elif row['security'] > query['security']:
-            price *= 0.997
+            price *= 0.97
         if query['gym'] > row['gym']:
-            price *= 1.005
+            price *= 1.025
         elif row['gym'] > query['gym']:
-            price *= 0.995
+            price *= 0.975
+        print(price, end='\n')
 
         effective_prices = np.append(effective_prices, price)
     return effective_prices

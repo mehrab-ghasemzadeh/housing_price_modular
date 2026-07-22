@@ -100,7 +100,7 @@ def predict_new(query={}, data_2y=df, data=df, neighborhoods=df):
                 else:
                     result_filter_weight = 8
                     result_reg_weight = 2
-        
+
         query_neighbors_with_score['price_per_area'] = calculate_effecctive_price(query_neighbors_with_score, query)
 
         final_prediction = ((result_filter * result_filter_weight) + (result_reg * result_reg_weight)) / (result_filter_weight + result_reg_weight)
