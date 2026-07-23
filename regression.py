@@ -4,6 +4,7 @@ def regressor_predict(data: dict):
     import os
     
     BASE_MODEL_DIR = "model_reg"
+    BASE_MODEL_DIR = "model_reg_v0_1"
     best_model = joblib.load(os.path.join(BASE_MODEL_DIR, 'best_model.pkl'))
     scaler_X = joblib.load(os.path.join(BASE_MODEL_DIR, 'scaler_X.pkl'))
     scaler_y = joblib.load(os.path.join(BASE_MODEL_DIR, 'scaler_y.pkl'))

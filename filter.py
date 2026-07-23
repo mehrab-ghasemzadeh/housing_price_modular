@@ -182,8 +182,12 @@ def calculate_effecctive_price(df, query):
         price = row['price_per_area']
         if query['building_age'] < row['building_age']:
             price *= (1 + get_age_relavance(price))
+            # for yr in range(abs(int(query['building_age'] - row['building_age']))):
+            #     price *= 1.015
         else:
             price *= (1 - get_age_relavance(price))
+            # for yr in range(abs(int(query['building_age'] - row['building_age']))):
+            #     price *= 0.985
         if row['num_bedrooms'] - query['num_bedrooms'] > 2:
             price *= 0.98
         elif query['num_bedrooms'] - row['num_bedrooms'] > 2:
@@ -221,7 +225,6 @@ def calculate_effecctive_price(df, query):
         elif query['storeHouse'] < row['storeHouse']:
             price *= 0.995
         # ! optional features
-        print(price, end='\t')
         if query['balcony'] > row['balcony']:
             price *= 1.01
         elif row['balcony'] > query['balcony']:
@@ -254,7 +257,6 @@ def calculate_effecctive_price(df, query):
             price *= 1.025
         elif row['gym'] > query['gym']:
             price *= 0.975
-        print(price, end='\n')
 
         effective_prices = np.append(effective_prices, price)
     return effective_prices

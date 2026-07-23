@@ -58,7 +58,6 @@ def generate_price_trend_plot(df, nid):
     return image_base64
 
 def predict_new(query={}, data_2y=df, data=df, neighborhoods=df):
-    print(query)
     WANTED_COLUMNS = ['date_publish','price_per_area','building_age','num_bedrooms','area','id_neighbourhood','floor','parking','elevator','storeHouse','balcony','is_luxury','is_modern','janitor','master_room','pool','security','gym']
     data = data[WANTED_COLUMNS]
     result = {}
@@ -71,7 +70,7 @@ def predict_new(query={}, data_2y=df, data=df, neighborhoods=df):
         score = calculate_similarity_scores(query, query_neighbors['content'])
         query_neighbors_with_score = pd.concat([query_neighbors['content'], score], axis=1)
         result_filter = weighted_sum(query_neighbors_with_score)
-        result['instance_base_regression'] = result_filter
+        # result['instance_base_regression'] = result_filter
         result['instance_base_neighbors'] = query_neighbors_with_score.to_dict(orient='records')
         
         trend_plot = generate_price_trend_plot(data_2y, query['id_neighbourhood'])
@@ -102,7 +101,7 @@ def predict_new(query={}, data_2y=df, data=df, neighborhoods=df):
                     result_reg_weight = 2
 
         query_neighbors_with_score['price_per_area'] = calculate_effecctive_price(query_neighbors_with_score, query)
-
+        result['instance_base_regression'] = query_neighbors_with_score['price_per_area'].mean()
         final_prediction = ((result_filter * result_filter_weight) + (result_reg * result_reg_weight)) / (result_filter_weight + result_reg_weight)
         result['final_prediction'] = final_prediction
         result['min_value'] = ((query_neighbors_with_score['price_per_area'].min() * result_filter_weight) + (result_reg * result_reg_weight)) / (result_filter_weight + result_reg_weight)
